@@ -1,0 +1,15 @@
+.git
+.next
+node_modules
+.playwright-mcp
+.vercel
+.env*
+*.tsbuildinfo
+npm-debug.log*
+.DS_Store
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
+AGENTS.md
+media-fuel-solutions-high-resolution-logo.png

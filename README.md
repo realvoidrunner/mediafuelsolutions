@@ -10,6 +10,35 @@ npm run dev      # http://localhost:3000
 npm run build    # production build
 ```
 
+## Deploy (Docker + Traefik)
+
+The site runs as one Docker container behind the shared Traefik proxy (the same one used by `frappe-route-trading`), which handles HTTPS certificates from Let's Encrypt automatically.
+
+**One-time setup**
+
+1. At your domain registrar, add **A** records for `mediafuelsolutions.com` and `www.mediafuelsolutions.com` pointing to the server's IP.
+2. Make sure Traefik is running on the server (`cd traefik && docker compose up -d` in the Frappe project) and ports 80 and 443 are open.
+3. Copy this project to the server (for example `git clone`).
+
+**Deploy or update**
+
+```bash
+git pull
+docker compose up -d --build
+```
+
+Traefik picks the container up once it reports healthy (a few seconds) and requests the certificate on the first visit. `www.` redirects to `https://mediafuelsolutions.com`, and plain `http://` redirects to `https://`.
+
+**Useful commands**
+
+```bash
+docker compose ps          # status and health
+docker compose logs -f     # site logs
+docker compose down        # stop the site
+```
+
+The domain and redirect live in the `labels` in `docker-compose.yml`. The share-image domain is `metadataBase` in `app/layout.tsx`. Change both together if the domain ever changes.
+
 ## Where to change things
 
 | What | File |
