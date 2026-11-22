@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Media Fuel Solutions website
 
-## Getting Started
+One-page site for Media Fuel Solutions, a lead generation agency for local and service businesses. Built with Next.js (App Router).
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where to change things
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| What | File |
+| --- | --- |
+| Contact details (email, phone, WhatsApp, hours) | `app/content.ts`, `contact` |
+| Services, industries, "why us", steps | `app/content.ts` |
+| Hero headline and example lead feed | `app/page.tsx` |
+| Colours, fonts, spacing | `app/globals.css`, the `:root` block at the top |
+| Logo | `public/media-fuel-logo.png` (header and footer), `public/og-image.png` (link preview). Original artwork: `media-fuel-solutions-high-resolution-logo.png` |
+| Browser tab icon | `app/icon.png`, `app/apple-icon.png` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Motion
 
-## Learn More
+Smooth scrolling uses [Lenis](https://github.com/darkroomengineering/lenis); scroll animations use [GSAP](https://gsap.com) + ScrollTrigger. All of it is set up in `app/components/Motion.tsx`, and the page opts in with data attributes:
 
-To learn more about Next.js, take a look at the following resources:
+| Attribute | Effect |
+| --- | --- |
+| `data-split` (with `<SplitWords />` inside) | Heading words slide up when scrolled into view |
+| `data-reveal` | Element fades up when scrolled into view |
+| `data-stagger` | Its children fade up one after another |
+| `data-float="0.5"` | Drifts gently with scroll (negative = opposite direction) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Visitors with "reduce motion" turned on in their device settings get a still page with normal scrolling.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contact form
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+There's no backend yet. Pressing **Send message** opens the visitor's email app with the message already written, addressed to `contact.email`. To receive messages directly, connect a form service (Formspree, Resend, etc.) or a Next.js Server Action in `app/components/ContactForm.tsx`.
